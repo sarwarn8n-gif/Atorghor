@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সেন্টেড ট্রেজারস - প্রিমিয়াম আতর কালেকশন</title>
+    <style>
+        /* আপনার সম্পূর্ণ CSS এখানে অপরিবর্তিত থাকবে */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+        :root { --primary-color: #2C3E50; --secondary-color: #BDC3C7; --accent-color: #C0A062; --background-color: #F4F4F4; --text-color: #333; --white-color: #FFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans Bengali', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.7s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        header { background: var(--white-color); box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 10px 0; position: fixed; width: 100%; top: 0; left: 0; z-index: 1000; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { max-height: 50px; }
+        .nav-right { display: flex; align-items: center; }
+        .order-now-btn-header { background: var(--accent-color); color: var(--white-color); padding: 8px 18px; border-radius: 25px; text-decoration: none; font-weight: 700; margin-right: 20px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+        .order-now-btn-header:hover { background: #ad8f55; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .menu-toggle { cursor: pointer; width: 30px; height: 21px; display: flex; flex-direction: column; justify-content: space-between; }
+        .menu-toggle .line { width: 100%; height: 3px; background-color: var(--primary-color); border-radius: 2px; transition: all 0.3s ease; }
+        .nav-menu { position: fixed; top: 70px; right: -100%; width: 250px; height: 100vh; background: var(--white-color); box-shadow: -2px 0 5px rgba(0,0,0,0.1); padding-top: 20px; transition: right 0.4s ease-in-out; }
+        .nav-menu.active { right: 0; }
+        .nav-menu a { display: block; padding: 15px 20px; color: var(--primary-color); text-decoration: none; font-size: 1.1em; }
+        main { padding-top: 70px; }
+        .section-title { font-size: 2.5em; margin-bottom: 50px; color: var(--primary-color); text-align: center; }
+        .slider-section { width: 100%; height: 65vh; max-height: 500px; overflow: hidden; position: relative; }
+        .slider-wrapper { display: flex; width: 500%; height: 100%; transition: transform 0.8s ease-in-out; }
+        .slide { width: 20%; height: 100%; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-section .overlay-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center; background: rgba(0,0,0,0.5); padding: 25px 45px; border-radius: 10px; }
+        .slider-section .overlay-text h1 { font-size: 2.8em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+        .offer-section { background: linear-gradient(135deg, var(--primary-color), #34495E); color: var(--white-color); padding: 60px 20px; text-align: center; }
+        .offer-title { font-size: 3em; font-weight: 700; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .product-section { padding: 60px 0; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .product-card { background: var(--white-color); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 18px 35px rgba(0,0,0,0.12); }
+        .product-image { width: 100%; height: 280px; object-fit: cover; }
+        .product-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; text-align: left;}
+        .product-title { font-size: 1.8em; color: var(--primary-color); }
+        .product-price { font-size: 2em; font-weight: 700; color: #333; margin: 10px 0; }
+        .btn-product-order { display: inline-block; background: var(--accent-color); color: var(--white-color); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 700; transition: background 0.3s ease; margin-top: auto; text-align: center; }
+        .btn-product-order:hover { background: #ad8f55; }
+        .details-section { padding: 60px 0; background-color: var(--white-color); }
+        .details-wrapper { display: flex; align-items: center; gap: 50px; }
+        .details-image { flex: 1; }
+        .details-image img { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .details-content { flex: 1.2; }
+        .details-content h3 { font-size: 2.2em; color: var(--primary-color); margin-bottom: 20px; }
+        .details-content p { margin-bottom: 20px; color: #555; }
+        .feature-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 30px; }
+        .feature-item { display: flex; align-items: center; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; }
+        .feature-item svg { stroke: var(--accent-color); }
+        .feature-item span { font-weight: 700; }
+        .order-section { padding: 60px 0; }
+        #order-form { max-width: 600px; margin: auto; background: var(--white-color); padding: 40px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; }
+        .form-group input, .form-group select { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; }
+        .custom-select-wrapper { position: relative; }
+        .select-selected { background-color: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .select-items { position: absolute; background-color: white; top: 105%; left: 0; right: 0; z-index: 99; border: 1px solid #ccc; border-radius: 5px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .select-items.select-show { max-height: 250px; overflow-y: auto; }
+        .select-option { cursor: pointer; padding: 12px; display: flex; align-items: center; gap: 15px; }
+        .select-option:hover { background-color: #f1f1f1; }
+        .select-option img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+        .form-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .btn { padding: 15px 20px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn-confirm { background: linear-gradient(45deg, #27ae60, #2ecc71); color: var(--white-color); box-shadow: 0 4px 10px rgba(46, 204, 113, 0.4); }
+        .btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(46, 204, 113, 0.5); }
+        .btn-whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); color: var(--white-color); box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); }
+        .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.5); }
+        .contact-us-flot { position: fixed; bottom: 30px; right: 30px; z-index: 1001; }
+        .contact-btn { background: var(--primary-color); color: var(--white-color); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5em; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); animation: bounce 2.5s infinite ease-in-out; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
+        .contact-info-popup { position: absolute; bottom: 80px; right: 0; background: var(--white-color); padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); width: 280px; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; }
+        .contact-info-popup.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        @media (max-width: 768px) { .details-wrapper { flex-direction: column; } .form-buttons { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <!-- আপনার সম্পূর্ণ HTML কোড -->
+    <header>
+        <div class="container">
+            <a href="#" class="logo"><img src="https://i.ibb.co/gbB36Hfd/0057f408-5789-4da7-b961-7f9e334eb36f.jpg" alt="Logo"></a>
+            <div class="nav-right">
+                <a href="#order-form-section" class="order-now-btn-header">অর্ডার করুন</a>
+                <div class="menu-toggle" id="menu-toggle">
+                    <div class="line"></div><div class="line"></div><div class="line"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-menu" id="nav-menu">
+            <a href="#">হোম</a>
+            <a href="#products">প্রোডাক্টস</a>
+            <a href="#details">পণ্যের বিবরণ</a>
+            <a href="#order-form-section">অর্ডার করুন</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="slider-section">
+            <div class="slider-wrapper">
+                <div class="slide"><img src="https://i.ibb.co/gbB36Hfd/0057f408-5789-4da7-b961-7f9e334eb36f.jpg" alt="Slider Image 1"></div>
+                <div class="slide"><img src="https://i.ibb.co/b5hsB4dM/fd43b221-5c25-4c09-bdc9-324952af321e.jpg" alt="Slider Image 2"></div>
+                <div class="slide"><img src="https://i.ibb.co/JWqFmC1Q/Private-CPO-Collection.jpg" alt="Slider Image 3"></div>
+                <div class="slide"><img src="https://i.ibb.co/b5TMRVTq/Hitamul-musk.jpg" alt="Slider Image 4"></div>
+                <div class="slide"><img src="https://i.ibb.co/xqCxRXcG/1b843e91-5948-4b63-a038-6a5f0f6a3fc3.jpg" alt="Slider Image 5"></div>
+            </div>
+            <div class="overlay-text"><h1>প্রিমিয়াম আতরের সংগ্রহ</h1></div>
+        </section>
+
+        <section class="offer-section reveal"><div class="container"><h1 class="offer-title">৩টি কিনলে ১টি ফ্রি!</h1></div></section>
+
+        <section id="products" class="product-section">
+            <div class="container">
+                <h2 class="section-title reveal">আমাদের আকর্ষণীয় কম্বো প্যাক</h2>
+                <div class="product-grid">
+                    <div class="product-card reveal">
+                        <img src="https://i.ibb.co/JWqFmC1Q/Private-CPO-Collection.jpg" alt="6 Piece Combo" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">৬টি আতরের কম্বো</h3>
+                            <p class="product-price">৳৫৫০</p>
+                            <a href="#order-form-section" class="btn-product-order" data-value="6_piece_combo" data-text="৬টি আতরের কম্বো - ৳৫৫০">Order Now</a>
+                        </div>
+                    </div>
+                    <div class="product-card reveal">
+                       <img src="https://i.ibb.co/b5TMRVTq/Hitamul-musk.jpg" alt="12 Piece Combo" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">১২টি আতরের কম্বো</h3>
+                            <p class="product-price">৳১০২০</p>
+                             <a href="#order-form-section" class="btn-product-order" data-value="12_piece_combo" data-text="১২টি আতরের কম্বো - ৳১০২০">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="details" class="details-section">
+            <div class="container">
+                <div class="details-wrapper reveal">
+                    <div class="details-image">
+                        <img src="https://i.ibb.co/xqCxRXcG/1b843e91-5948-4b63-a038-6a5f0f6a3fc3.jpg" alt="Product Details">
+                    </div>
+                    <div class="details-content">
+                        <h3>আমাদের আতরের বিশেষত্ব</h3>
+                        <p>আমাদের প্রতিটি আতর সর্বোচ্চ মানের প্রাকৃতিক উপাদান দিয়ে তৈরি, যা আপনাকে দেয় এক অবিস্মরণীয় অভিজ্ঞতা। আমরা ঐতিহ্য এবং আধুনিকতারผสมণে এমন সুগন্ধ তৈরি করি, যা আপনার ব্যক্তিত্বকে ফুটিয়ে তোলে এবং আপনাকে রাখে সারাদিন সতেজ ও আত্মবিশ্বাসী।</p>
+                        <div class="feature-highlights">
+                            <div class="feature-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>দীর্ঘস্থায়ী সুগন্ধ</span>
+                            </div>
+                            <div class="feature-item">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span>১০০% অ্যালকোহল-মুক্ত</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                <span>ত্বকের জন্য নিরাপদ</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>প্রিমিয়াম কোয়ালিটি</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="order-form-section" class="order-section">
+            <div class="container">
+                <form id="order-form" class="reveal">
+                    <h2 class="section-title">অর্ডার কনফার্ম করুন</h2>
+                    <div class="form-group"><label for="name">আপনার নাম</label><input type="text" id="name" required></div>
+                    <div class="form-group"><label for="phone">মোবাইল নাম্বার</label><input type="tel" id="phone" placeholder="01xxxxxxxxx" pattern="01[3-9]\d{8}" required></div>
+                    <div class="form-group"><label for="address">সম্পূর্ণ ঠিকানা</label><input type="text" id="address" required></div>
+                    <div class="form-group">
+                        <label>প্রোডাক্ট বাছাই করুন</label>
+                        <div class="custom-select-wrapper">
+                            <div class="select-selected"><span>--পছন্দ করুন--</span></div>
+                            <div class="select-items select-hide">
+                                <div class="select-option" data-value="6_piece_combo">
+                                    <img src="https://i.ibb.co/JWqFmC1Q/Private-CPO-Collection.jpg" alt="">
+                                    <span>৬টি আতরের কম্বো - ৳৫৫০</span>
+                                </div>
+                                <div class="select-option" data-value="12_piece_combo">
+                                    <img src="https://i.ibb.co/b5TMRVTq/Hitamul-musk.jpg" alt="">
+                                    <span>১২টি আতরের কম্বো - ৳১০২০</span>
+                                </div>
+                            </div>
+                            <input type="hidden" id="product" required>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-confirm">Confirm Order</button>
+                        <a href="#" id="whatsapp-order-btn" class="btn btn-whatsapp" target="_blank">WhatsApp Order</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    <div class="contact-us-flot">
+        <div class="contact-btn" id="contact-btn">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        </div>
+        <div class="contact-info-popup" id="contact-popup">
+            <h4>যোগাযোগ করুন</h4>
+            <p><strong>WhatsApp:</strong> 01748771039</p>
+            <p><strong>Email:</strong> smsoroar78@gmail.com</p>
+        </div>
+    </div>
+    
+    <!-- *** গুরুত্বপূর্ণ পরিবর্তন: সঠিক Firebase SDK যোগ করা হয়েছে *** -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // আপনার দেওয়া Firebase কনফিগারেশন
+        const firebaseConfig = {
+            apiKey: "AIzaSyATc_EtrP339w9m71wG9VxtVssarQBuOng",
+            authDomain: "order-test-1-9a2f5.firebaseapp.com",
+            databaseURL: "https://order-test-1-9a2f5-default-rtdb.firebaseio.com",
+            projectId: "order-test-1-9a2f5",
+            storageBucket: "order-test-1-9a2f5.firebasestorage.app",
+            messagingSenderId: "1484540247",
+            appId: "1:1484540247:web:3f9e589860c44296dad612"
+        };
+
+        // Firebase অ্যাপ ইনিশিয়ালাইজ করুন (ভার্সন ৮ এর পদ্ধতিতে)
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // আপনার আগের সব জাভাস্ক্রিপ্ট কোড এখানে অপরিবর্তিত থাকবে
+            const select = (el) => document.querySelector(el);
+            const selectAll = (el) => document.querySelectorAll(el);
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            selectAll('.reveal').forEach(el => observer.observe(el));
+            
+            const sliderWrapper = select('.slider-wrapper');
+            const slides = selectAll('.slide');
+            let slideIndex = 0;
+            setInterval(() => {
+                slideIndex = (slideIndex + 1) % slides.length;
+                sliderWrapper.style.transform = `translateX(-${slideIndex * (100 / slides.length)}%)`;
+            }, 3000);
+
+            select('#menu-toggle').addEventListener('click', () => select('#nav-menu').classList.toggle('active'));
+
+            const selectWrapper = select('.custom-select-wrapper');
+            const selectSelected = select('.select-selected');
+            const selectItems = select('.select-items');
+            const hiddenProductInput = select('#product');
+
+            selectSelected.addEventListener('click', () => selectItems.classList.toggle('select-show'));
+
+            selectAll('.select-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectSelected.querySelector('span').innerHTML = this.querySelector('span').innerHTML;
+                    hiddenProductInput.value = this.dataset.value;
+                    selectItems.classList.remove('select-show');
+                    updateWhatsAppLink();
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!selectWrapper.contains(e.target)) selectItems.classList.remove('select-show');
+            });
+
+            selectAll('.btn-product-order').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const productValue = this.dataset.value;
+                    const productText = this.dataset.text;
+                    selectSelected.querySelector('span').textContent = productText;
+                    hiddenProductInput.value = productValue;
+                    updateWhatsAppLink();
+                });
+            });
+
+            const orderForm = select('#order-form');
+            const whatsappBtn = select('#whatsapp-order-btn');
+            const updateWhatsAppLink = () => {
+                const name = select('#name').value;
+                const phone = select('#phone').value;
+                const address = select('#address').value;
+                const productText = selectSelected.querySelector('span').textContent;
+
+                if (!hiddenProductInput.value || hiddenProductInput.value === "") {
+                     whatsappBtn.style.pointerEvents = "none";
+                     whatsappBtn.style.opacity = "0.6";
+                     return;
+                }
+                whatsappBtn.style.pointerEvents = "auto";
+                whatsappBtn.style.opacity = "1";
+
+                let message = `নমস্কার, আমি একটি অর্ডার করতে চাই:\n\n` +
+                              `প্রোডাক্ট: ${productText}\n` +
+                              `নাম: ${name || 'N/A'}\n` +
+                              `মোবাইল: ${phone || 'N/A'}\n` +
+                              `ঠিকানা: ${address || 'N/A'}\n\n` +
+                              `ধন্যবাদ।`;
+                
+                const whatsappNumber = '8801748771039';
+                whatsappBtn.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            };
+
+            orderForm.addEventListener('input', updateWhatsAppLink);
+            updateWhatsAppLink();
+
+            // *** Firebase এ ডেটা পাঠানোর সংশোধিত কোড ***
+            orderForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const submitButton = e.target.querySelector('.btn-confirm');
+
+                const name = select('#name').value;
+                const phone = select('#phone').value;
+                const address = select('#address').value;
+                const productValue = hiddenProductInput.value;
+                const productText = selectSelected.querySelector('span').textContent;
+
+                if (!productValue) {
+                    alert('অনুগ্রহ করে একটি প্রোডাক্ট বাছাই করুন।');
+                    return;
+                }
+                
+                submitButton.disabled = true;
+                submitButton.textContent = 'অপেক্ষা করুন...';
+
+                // একটি নতুন ইউনিক কী দিয়ে ডেটাবেসে অর্ডার যোগ করুন
+                database.ref('orders').push({
+                    name: name,
+                    phone: phone,
+                    address: address,
+                    product: productText,
+                    productId: productValue,
+                    orderTimestamp: new Date().toISOString(),
+                    status: 'New' // প্রাথমিক স্ট্যাটাস
+                })
+                .then(() => {
+                    alert('আপনার অর্ডারটি সফলভাবে গৃহীত হয়েছে! আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবে।');
+                    orderForm.reset();
+                    selectSelected.querySelector('span').textContent = '--পছন্দ করুন--';
+                    hiddenProductInput.value = '';
+                    updateWhatsAppLink();
+                })
+                .catch((error) => {
+                    console.error("Order submission failed: ", error);
+                    alert('দুঃখিত, আপনার অর্ডারটি গ্রহণ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।');
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Confirm Order';
+                });
+            });
+
+            const contactBtnContainer = select('.contact-us-flot');
+            select('#contact-btn').addEventListener('click', () => select('#contact-popup').classList.toggle('active'));
+            document.addEventListener('click', (e) => {
+                if (!contactBtnContainer.contains(e.target)) {
+                    select('#contact-popup').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+
+<!-- Fullscreen Overlay -->
+<div id="fullscreenOverlay" style="display:none;">
+  <img id="fullscreenImage" src="" alt="Fullscreen Image">
+  <button id="okButton">OK</button>
+</div>
+
+
+</html>```
+
+---
